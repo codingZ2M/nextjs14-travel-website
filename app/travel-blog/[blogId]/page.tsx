@@ -7,16 +7,26 @@ import {blogPosts} from "../../../util/blogPosts"
 interface BlogParams {
     blogId: number;
   }
-  
-  // "params" prop should be an object with a property named blogId of type string, 
+
+  // Define an interface for the blog post
+interface BlogPost {
+  id: number;
+  title: string;
+  date: string;
+  image: string;
+  description: string;
+}
+
+  // "params" prop should be an object with a property named blogId of type number, 
   // according to the BlogParams interface.
   const BlogPost = ({ params }: { params: BlogParams }) => {
-    const [selectedPost, setSelectedPost] = useState(null);
+   // const [selectedPost, setSelectedPost] = useState(null);
+    const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
     // useEffect to update selectedPost when blogID changes
-  React.useEffect(() => {
-    const post:any = blogPosts.find((post) => post.id == params.blogId);
-    setSelectedPost(post);
+  useEffect(() => {
+    const post:BlogPost | undefined = blogPosts.find((post) => post.id == params.blogId);
+    setSelectedPost(post || null);
   }, [ params.blogId]);
 
   if (!selectedPost) {
